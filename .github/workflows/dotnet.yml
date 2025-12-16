@@ -5,44 +5,64 @@ on:
     branches: [ "**" ]
   pull_request:
     branches: [ "**" ]
-    
+
 permissions:
-  contents: read
-  pull-requests: write
+  contents: write       # needed to push badge back into repo
+  pull-requests: write  # needed for PR comments
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
+
     - name: Restore dependencies
       run: dotnet restore GameStore/GameStore.sln
+
     - name: Build
       run: dotnet build GameStore/GameStore.sln --no-restore
+
     - name: Test with coverage
       run: dotnet test GameStore.Tests/GameStore.Tests.csproj --collect:"XPlat Code Coverage"
+
     - name: Report code coverage
       uses: danielpalme/ReportGenerator-GitHub-Action@5.3.5
       with:
         reports: '**/coverage.cobertura.xml'
         targetdir: 'coverage-report'
         reporttypes: 'Badges;MarkdownSummary'
+
     - name: Upload coverage badge
       uses: actions/upload-artifact@v4
       with:
         name: coverage-badge
-        path: coverage-report/badge.svg
+        path: coverage-report/badge_linecoverage.svg   # ✅ use actual file
+
     - name: Upload coverage summary
       uses: actions/upload-artifact@v4
       with:
         name: coverage-summary
         path: coverage-report/Summary.md
+
     - name: Post code coverage as PR comment
       if: github.event_name == 'pull_request'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         path: coverage-report/Summary.md
+
+    - name: Copy badge to repo
+      run: cp coverage-report/badge_linecoverage.svg coverage-badge.svg
+
+    - name: Commit badge to main
+      if: github.ref == 'refs/heads/main'
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add coverage-badge.svg
+        git commit -m "Update coverage badge" || echo "No changes to commit"
+        git push || echo "No changes to push"
