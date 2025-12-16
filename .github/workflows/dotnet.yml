@@ -36,6 +36,8 @@ jobs:
         reports: '**/coverage.cobertura.xml'
         targetdir: 'coverage-report'
         reporttypes: 'Badges;MarkdownSummary'
+    - name: List coverage report files
+      run: ls -R coverage-report
 
     - name: Upload coverage badge
       uses: actions/upload-artifact@v4
