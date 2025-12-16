@@ -36,14 +36,12 @@ jobs:
         reports: '**/coverage.cobertura.xml'
         targetdir: 'coverage-report'
         reporttypes: 'Badges;MarkdownSummary'
-    - name: List coverage report files
-      run: ls -R coverage-report
 
     - name: Upload coverage badge
       uses: actions/upload-artifact@v4
       with:
         name: coverage-badge
-        path: coverage-report/badge_line.svg   # ✅ correct file name
+        path: coverage-report/badge_linecoverage.svg   # ✅ use actual file
 
     - name: Upload coverage summary
       uses: actions/upload-artifact@v4
@@ -58,7 +56,7 @@ jobs:
         path: coverage-report/Summary.md
 
     - name: Copy badge to repo
-      run: cp coverage-report/badge_line.svg coverage-badge.svg
+      run: cp coverage-report/badge_linecoverage.svg coverage-badge.svg
 
     - name: Commit badge to main
       if: github.ref == 'refs/heads/main'
