@@ -16,9 +16,9 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore GameStore/GameStore.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build GameStore/GameStore.sln --no-restore
     - name: Test with coverage
       run: dotnet test GameStore.Tests/GameStore.Tests.csproj --collect:"XPlat Code Coverage"
     - name: Report code coverage
