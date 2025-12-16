@@ -1,0 +1,10 @@
+# Copilot Custom Instructions for GameStore
+
+Always use controllers for API endpoints.
+Always use dependency injection.
+Always use the repository pattern.
+Use best practices.
+Always add XML summary comments.
+Use DTOs where it makes sense.
+Use individual files for classes, interfaces, DTOs, etc.
+Always show me your plan before you start implementing.

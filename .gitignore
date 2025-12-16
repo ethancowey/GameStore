@@ -1,0 +1,40 @@
+# .NET build and user-specific files
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Test results
+TestResults/
+
+# Coverage reports
+coverage-report/
+coverage/
+*.coverage
+*.coveragexml
+*.codecov
+
+# Build outputs
+*.dll
+*.exe
+*.app
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# HTTP files
+*.http
+
+# Copilot files
+.copilot/
+copilot.json
+
+# Others
+*.vs/
