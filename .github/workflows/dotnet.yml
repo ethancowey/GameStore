@@ -46,3 +46,15 @@ jobs:
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         path: coverage-report/Summary.md
+    - name: Copy badge to repo
+      run: cp coverage-report/badge.svg coverage-badge.svg
+    - name: Commit badge to main
+    if: github.ref == 'refs/heads/main'
+    run: |
+      git config --global user.name "github-actions[bot]"
+      git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      git add coverage-badge.svg
+      git commit -m "Update coverage badge"
+      git push
+
+
