@@ -36,5 +36,8 @@ Thumbs.db
 .copilot/
 copilot.json
 
+#node_modules
+node_modules/
+
 # Others
 *.vs/
