@@ -20,3 +20,13 @@ export async function createGame(gameData) {
   });
   return response.json();
 }
+
+export async function deleteGame(id) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "DELETE",
+  });
+   if (!response.ok) {
+    throw new Error(`Failed to delete game: ${response.status}`);
+  }
+  return true;
+}
